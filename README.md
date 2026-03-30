@@ -9,8 +9,8 @@ Developed as part of Web Programming coursework (Semester 4).
 - Ethical data representation
 
 ### Team Contributions
-- Member 1: Layout, documentation, insights
-- Member 2: Dashboard visuals, alerts, styling
+- anemoia1: Layout, ideation, styling
+- hagoose: JS scripts, functions
 
 ### Ethics
 All content is original. External data sources and images are cited.
