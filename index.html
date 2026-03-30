@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OceanPulse – Ocean State Monitoring Dashboard</title>
+    <meta
+      name="description"
+      content="Descend into the depths. Monitor sea surface temperature, marine heatwaves, acidity, sea level rise, and more."
+    />
+    <meta
+      property="og:title"
+      content="OceanPulse – Ocean State Monitoring Dashboard"
+    />
+    <meta
+      property="og:description"
+      content="Immersive ocean monitoring from sky to seafloor."
+    />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/effects.css" />
+    <link rel="stylesheet" href="css/parallax.css" />
+  </head>
+  <body>
+    <div class="custom-cursor"></div>
+    <!-- LOADER -->
+    <div id="ocean-loader" role="status" aria-live="polite">
+      <div class="loader-logo">OceanPulse</div>
+      <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+      <div class="loader-text" id="loader-status-text">
+        Initializing Ocean State…
+      </div>
+      <div class="loader-waves">
+        <div class="loader-wave-dot"></div>
+        <div class="loader-wave-dot"></div>
+        <div class="loader-wave-dot"></div>
+        <div class="loader-wave-dot"></div>
+        <div class="loader-wave-dot"></div>
+      </div>
+    </div>
+
+    <!-- PARTICLE CANVAS -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- DEPTH COLOR OVERLAY -->
+    <div id="depth-color-overlay" aria-hidden="true"></div>
+
+    <!-- DEPTH PROGRESS BAR -->
+    <div id="depth-bar" aria-hidden="true">
+      <div id="depth-bar-fill" style="height: 0%"></div>
+    </div>
+
+    <!-- PRESSURE GAUGE (section nav) -->
+    <nav id="pressure-gauge" aria-label="Section navigation">
+      <div class="pressure-node active" title="Sky"></div>
+      <div class="pressure-node" title="Ocean Surface"></div>
+      <div class="pressure-node" title="Shallow Water"></div>
+      <div class="pressure-node" title="Mid Ocean"></div>
+      <div class="pressure-node" title="Deep Ocean"></div>
+      <div class="pressure-node" title="Seafloor"></div>
+    </nav>
+
+    <!-- NAVIGATION -->
+    <nav class="ocean-nav" role="navigation">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">🌊</div>
+        OceanPulse
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Explore</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="insights.html">Insights</a></li>
+        <li><a href="references.html">References</a></li>
+      </ul>
+      <div class="nav-depth-indicator" id="nav-depth-label">0 m · Sky</div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════
+     SECTION 1 — SKY (Hero)
+═══════════════════════════════════════ -->
+    <section
+      id="section-sky"
+      class="ocean-section section-sky parallax-scene"
+      aria-labelledby="sky-heading"
+    >
+      <div class="parallax-layer layer-back" aria-hidden="true">
+        <div class="sky-cloud cloud-1"></div>
+        <div class="sky-cloud cloud-2"></div>
+        <div class="sky-cloud cloud-3"></div>
+        <!-- Sunrays -->
+        <div class="sunray" style="--r: -25deg; height: 80%; left: 45%"></div>
+        <div class="sunray" style="--r: -15deg; height: 65%; left: 50%"></div>
+        <div class="sunray" style="--r: 5deg; height: 55%; left: 55%"></div>
+        <div class="sunray" style="--r: 18deg; height: 45%; left: 58%"></div>
+        <div class="sunray" style="--r: -35deg; height: 50%; left: 42%"></div>
+      </div>
+      <div class="ocean-shimmer" aria-hidden="true"></div>
+      <div class="depth-label">Surface · 0 m</div>
+
+      <div class="section-inner">
+        <div class="hero-content">
+          <div class="hero-eyebrow reveal">Global Ocean State Monitoring</div>
+          <h1 id="sky-heading" class="reveal reveal-delay-1">
+            The Ocean is <span>Changing.</span><br />We're Watching.
+          </h1>
+          <p class="hero-sub reveal reveal-delay-2">
+            Scroll to descend through the ocean layers
+          </p>
+          <div
+            class="reveal reveal-delay-3"
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 1rem;
+              flex-wrap: wrap;
+            "
+          >
+            <a href="dashboard.html" class="hero-cta">View Live Dashboard</a>
+            <a href="insights.html" class="hero-cta-ghost">Read Insights</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Waveform -->
+      <div class="hero-waveform" aria-hidden="true"></div>
+
+      <!-- Scroll hint -->
+      <div class="scroll-hint" aria-hidden="true">
+        <span>Descend</span>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M12 5v14M5 12l7 7 7-7" />
+        </svg>
+      </div>
+
+      <!-- Wave divider -->
+      <div class="wave-divider">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+          <path
+            d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z"
+            fill="#1c7ba0"
+          />
+        </svg>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+     SECTION 2 — OCEAN SURFACE (0–200 m)
+═══════════════════════════════════════ -->
+    <section
+      id="section-surface"
+      class="ocean-section section-surface parallax-scene"
+      aria-labelledby="surface-heading"
+    >
+      <div class="light-rays" aria-hidden="true">
+        <div
+          class="light-ray"
+          style="--base: -20deg; --dur: 9s; left: 20%"
+        ></div>
+        <div
+          class="light-ray"
+          style="--base: -8deg; --dur: 11s; left: 35%"
+        ></div>
+        <div class="light-ray" style="--base: 5deg; --dur: 8s; left: 55%"></div>
+        <div
+          class="light-ray"
+          style="--base: 18deg; --dur: 13s; left: 70%"
+        ></div>
+      </div>
+      <div class="ocean-caustics" aria-hidden="true"></div>
+      <div class="ocean-shimmer" aria-hidden="true"></div>
+      <div class="depth-label">Epipelagic · 0–200 m</div>
+
+      <div class="section-inner">
+        <div class="section-hero reveal">
+          <div class="eyebrow">Climate Trend Assessment</div>
+          <h2 id="surface-heading">Sea Surface Conditions</h2>
+          <p>
+            The ocean absorbs over 90% of excess heat from climate change.
+            Surface monitoring is our first warning system.
+          </p>
+        </div>
+
+        <div class="card-grid">
+          <a
+            href="dashboard.html"
+            class="blurb-card"
+            aria-label="Sea Surface Temperature details"
+          >
+            <span class="card-icon">🌡️</span>
+            <span class="card-tag tag-blue">SST</span>
+            <h3>Sea Surface Temperature</h3>
+            <p>
+              Global average SST has risen by <strong>+0.9°C</strong> since
+              1880. Current anomaly exceeds IPCC warning thresholds in multiple
+              ocean basins.
+            </p>
+            <span class="card-value" style="color: #38bdf8">+18.7°C</span>
+            <span class="card-change" style="color: #fb923c"
+              >▲ +2.3°C above 20th-century average</span
+            >
+            <span class="card-link">View trend</span>
+          </a>
+
+          <a href="dashboard.html" class="blurb-card">
+            <span class="card-icon">🔥</span>
+            <span class="card-tag tag-orange">Heatwave</span>
+            <h3>Marine Heatwave Alert</h3>
+            <p>
+              North Atlantic SST anomaly at <strong>+4.2°C</strong>. Category 4
+              marine heatwave persisting for 38 days. Coral bleaching risk
+              critical.
+            </p>
+            <span class="card-value" style="color: #f87171">+4.2°C</span>
+            <span class="card-change" style="color: #f87171"
+              >⚠️ Severe · 38 days duration</span
+            >
+            <span class="card-link">Alert details</span>
+          </a>
+
+          <a href="insights.html" class="blurb-card">
+            <span class="card-icon">♨️</span>
+            <span class="card-tag tag-red">Heat Content</span>
+            <h3>Ocean Heat Content</h3>
+            <p>
+              The upper 2000 m of the global ocean reached a record +385 ZJ
+              anomaly in 2024 — the highest in 65 years of modern records.
+            </p>
+            <span class="card-value" style="color: #fb923c">385 ZJ</span>
+            <span class="card-change" style="color: #fb923c"
+              >▲ Record high · 2024</span
+            >
+            <span class="card-link">Learn more</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="wave-divider">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+          <path
+            d="M0,20 C400,55 1000,5 1440,35 L1440,60 L0,60 Z"
+            fill="#0a4d70"
+          />
+        </svg>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+     SECTION 3 — SHALLOW (200–1000 m)
+═══════════════════════════════════════ -->
+    <section
+      id="section-shallow"
+      class="ocean-section section-shallow parallax-scene"
+      aria-labelledby="shallow-heading"
+    >
+      <div class="light-rays" aria-hidden="true" style="opacity: 0.5">
+        <div
+          class="light-ray"
+          style="--base: -15deg; --dur: 14s; left: 30%"
+        ></div>
+        <div
+          class="light-ray"
+          style="--base: 10deg; --dur: 10s; left: 65%"
+        ></div>
+      </div>
+      <div class="ocean-shimmer" aria-hidden="true"></div>
+      <div class="depth-label">Mesopelagic · 200–1000 m</div>
+
+      <div class="section-inner">
+        <div class="section-hero reveal">
+          <div class="eyebrow">Physical Oceanography</div>
+          <h2 id="shallow-heading">Sea Level & Salinity</h2>
+          <p>
+            Thermal expansion and ice sheet melt are driving accelerating sea
+            level rise. Salinity shifts disrupt circulation patterns globally.
+          </p>
+        </div>
+
+        <div class="card-grid card-grid-2">
+          <a href="dashboard.html" class="blurb-card">
+            <span class="card-icon">📈</span>
+            <span class="card-tag tag-teal">Sea Level</span>
+            <h3>Sea Level Rise</h3>
+            <p>
+              Global mean sea level has risen by <strong>+115 mm</strong> since
+              1990, with the rate accelerating from 1.4 mm/yr in 1993 to over
+              3.7 mm/yr in 2024. Projections suggest 0.3–1.0 m rise by 2100
+              under current emissions.
+            </p>
+            <span class="card-value" style="color: #2dd4bf">+115 mm</span>
+            <span class="card-change" style="color: #fb923c"
+              >▲ Rate accelerating +28% since 2000</span
+            >
+            <span class="card-link">View chart</span>
+          </a>
+
+          <a href="insights.html" class="blurb-card">
+            <span class="card-icon">🧂</span>
+            <span class="card-tag tag-blue">Salinity</span>
+            <h3>Ocean Salinity Shifts</h3>
+            <p>
+              Global salinity patterns are intensifying: salty regions becoming
+              saltier, fresh regions fresher — amplifying the hydrological cycle
+              by an estimated <strong>+5% per °C</strong> of warming. Arctic
+              freshening threatens thermohaline circulation.
+            </p>
+            <span class="card-value" style="color: #38bdf8">34.7 PSU</span>
+            <span class="card-change" style="color: #facc15"
+              >⚡ Regional extremes widening</span
+            >
+            <span class="card-link">Explore data</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="wave-divider">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+          <path
+            d="M0,40 C500,10 900,50 1440,20 L1440,60 L0,60 Z"
+            fill="#052d45"
+          />
+        </svg>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+     SECTION 4 — MID OCEAN (1000–4000 m)
+═══════════════════════════════════════ -->
+    <section
+      id="section-mid"
+      class="ocean-section section-mid parallax-scene"
+      aria-labelledby="mid-heading"
+    >
+      <div class="ocean-shimmer" aria-hidden="true" style="opacity: 0.4"></div>
+      <div class="depth-label">Bathypelagic · 1000–4000 m</div>
+
+      <div class="section-inner">
+        <div class="section-hero reveal">
+          <div class="eyebrow">Chemical Oceanography</div>
+          <h2 id="mid-heading">Acidification & Oxygen</h2>
+          <p>
+            As CO₂ dissolves into seawater, oceans acidify — threatening
+            calcifying organisms and entire food webs. Deoxygenation compounds
+            the crisis.
+          </p>
+        </div>
+
+        <div class="card-grid">
+          <a href="insights.html" class="blurb-card">
+            <span class="card-icon">⚗️</span>
+            <span class="card-tag tag-purple">Acidity</span>
+            <h3>Ocean Acidification (pH)</h3>
+            <p>
+              Surface ocean pH has declined from a pre-industrial
+              <strong>8.18</strong> to the current <strong>8.04</strong> — a 30%
+              increase in hydrogen ion concentration. Shell-forming organisms
+              face dissolution stress.
+            </p>
+            <span class="card-value" style="color: #a78bfa">pH 8.04</span>
+            <span class="card-change" style="color: #f87171"
+              >▼ −0.14 since pre-industrial era</span
+            >
+            <span class="card-link">pH insights</span>
+          </a>
+
+          <a href="insights.html" class="blurb-card">
+            <span class="card-icon">💨</span>
+            <span class="card-tag tag-teal">Oxygen</span>
+            <h3>Dissolved Oxygen</h3>
+            <p>
+              Open ocean oxygen has declined by <strong>~2%</strong> since 1960.
+              Oxygen minimum zones (OMZs) have expanded by 4.5 million km²,
+              creating dead zones threatening fish populations and deep-sea
+              ecosystems.
+            </p>
+            <span class="card-value" style="color: #2dd4bf">6.2 mg/L</span>
+            <span class="card-change" style="color: #fb923c"
+              >▼ −2% global decline since 1960</span
+            >
+            <span class="card-link">OMZ data</span>
+          </a>
+
+          <a href="insights.html" class="blurb-card">
+            <span class="card-icon">🌿</span>
+            <span class="card-tag tag-green">Chlorophyll</span>
+            <h3>Chlorophyll Concentration</h3>
+            <p>
+              Phytoplankton abundance has declined by <strong>~40%</strong> in
+              the oligotrophic gyres since 1950. These microscopic algae produce
+              50% of Earth's oxygen and anchor marine food chains.
+            </p>
+            <span class="card-value" style="color: #4ade80">0.31 mg/m³</span>
+            <span class="card-change" style="color: #fb923c"
+              >▼ Declining in stratified gyres</span
+            >
+            <span class="card-link">Biomass data</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="wave-divider">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+          <path
+            d="M0,30 C350,0 1100,55 1440,25 L1440,60 L0,60 Z"
+            fill="#020f1a"
+          />
+        </svg>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+     SECTION 5 — DEEP OCEAN (4000–6000 m)
+═══════════════════════════════════════ -->
+    <section
+      id="section-deep"
+      class="ocean-section section-deep parallax-scene"
+      aria-labelledby="deep-heading"
+    >
+      <!-- Bioluminescent particles -->
+      <div
+        class="biolum"
+        style="
+          width: 60px;
+          height: 60px;
+          background: radial-gradient(
+            circle,
+            rgba(56, 189, 248, 0.15),
+            transparent
+          );
+          top: 30%;
+          left: 15%;
+          --dur: 5s;
+        "
+      ></div>
+      <div
+        class="biolum"
+        style="
+          width: 40px;
+          height: 40px;
+          background: radial-gradient(
+            circle,
+            rgba(74, 222, 128, 0.12),
+            transparent
+          );
+          top: 55%;
+          left: 75%;
+          --dur: 7s;
+        "
+      ></div>
+      <div
+        class="biolum"
+        style="
+          width: 80px;
+          height: 80px;
+          background: radial-gradient(
+            circle,
+            rgba(167, 139, 250, 0.1),
+            transparent
+          );
+          top: 20%;
+          left: 60%;
+          --dur: 4s;
+        "
+      ></div>
+      <div class="depth-label">Abyssopelagic · 4000–6000 m</div>
+
+      <div class="section-inner">
+        <div class="section-hero reveal">
+          <div class="eyebrow">Biological Oceanography</div>
+          <h2 id="deep-heading">Biodiversity & Ecosystem Stress</h2>
+          <p>
+            Deep ocean ecosystems face cascading threats. Species range shifts,
+            coral bleaching, and new biological stressors are reshaping ocean
+            biodiversity.
+          </p>
+        </div>
+
+        <div class="card-grid card-grid-2">
+          <a href="insights.html" class="blurb-card">
+            <span class="card-icon">🐠</span>
+            <span class="card-tag tag-orange">Biodiversity</span>
+            <h3>Marine Biodiversity Stress</h3>
+            <p>
+              Over <strong>33%</strong> of reef-building coral species now face
+              elevated extinction risk. Species are shifting poleward at 72
+              km/decade on average, disrupting predator-prey relationships and
+              ecosystem function across ocean basins.
+            </p>
+            <span class="card-value" style="color: #fb923c">High Risk</span>
+            <span class="card-change" style="color: #f87171"
+              >⚠️ 33% coral species threatened</span
+            >
+            <span class="card-link">Biodiversity report</span>
+          </a>
+
+          <a href="insights.html" class="blurb-card">
+            <span class="card-icon">🧴</span>
+            <span class="card-tag tag-yellow">Pollution</span>
+            <h3>Marine Plastic Pollution Index</h3>
+            <p>
+              An estimated <strong>11 million metric tons</strong> of plastic
+              enter oceans annually. Microplastic concentrations in deep ocean
+              sediments reach 1.9 million fragments/m² — exceeding surface
+              garbage patches. This index synthesizes ingestion rates,
+              entanglement risk, and chemical leaching potential.
+            </p>
+            <span class="card-value" style="color: #facc15">7.2 / 10</span>
+            <span class="card-change" style="color: #fb923c"
+              >▲ Pollution index elevated</span
+            >
+            <span class="card-link">Pollution data</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="wave-divider">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+          <path
+            d="M0,20 C600,55 800,5 1440,40 L1440,60 L0,60 Z"
+            fill="#010810"
+          />
+        </svg>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+     SECTION 6 — SEAFLOOR
+═══════════════════════════════════════ -->
+    <section
+      id="section-floor"
+      class="ocean-section section-floor parallax-scene"
+      aria-labelledby="floor-heading"
+    >
+      <!-- Deep bioluminescence -->
+      <div
+        class="biolum"
+        style="
+          width: 100px;
+          height: 100px;
+          background: radial-gradient(
+            circle,
+            rgba(56, 189, 248, 0.08),
+            transparent
+          );
+          top: 40%;
+          left: 25%;
+          --dur: 8s;
+        "
+      ></div>
+      <div
+        class="biolum"
+        style="
+          width: 50px;
+          height: 50px;
+          background: radial-gradient(
+            circle,
+            rgba(45, 212, 191, 0.1),
+            transparent
+          );
+          top: 25%;
+          left: 80%;
+          --dur: 6s;
+        "
+      ></div>
+      <div
+        class="biolum"
+        style="
+          width: 70px;
+          height: 70px;
+          background: radial-gradient(
+            circle,
+            rgba(167, 139, 250, 0.08),
+            transparent
+          );
+          top: 65%;
+          left: 50%;
+          --dur: 9s;
+        "
+      ></div>
+      <div class="sediment" aria-hidden="true"></div>
+      <div class="depth-label">Hadalpelagic · 6000+ m</div>
+
+      <div class="section-inner">
+        <div class="section-hero reveal">
+          <div class="eyebrow">Composite Index</div>
+          <h2 id="floor-heading">Ocean Stress Index</h2>
+          <p>
+            A synthesis of all monitoring parameters into a single composite
+            risk metric — measuring cumulative pressure on ocean systems.
+          </p>
+        </div>
+
+        <div class="card-grid">
+          <div class="blurb-card">
+            <span class="card-icon">📊</span>
+            <span class="card-tag tag-red">Composite</span>
+            <h3>Ocean Stress Index (OSI)</h3>
+            <p>
+              The OSI synthesizes SST anomaly, pH decline, dissolved oxygen
+              loss, sea level rise rate, and biodiversity stress into a 0–10
+              severity scale. Current global OSI: <strong>6.8/10</strong> — a
+              historic high driven by concurrent multi-system stressors.
+            </p>
+            <span class="card-value" style="color: #f87171">6.8 / 10</span>
+            <span class="card-change" style="color: #f87171"
+              >▲ +2.1 points since 2000 · High</span
+            >
+            <span class="card-link">OSI methodology</span>
+          </div>
+
+          <a href="dashboard.html" class="blurb-card">
+            <span class="card-icon">🛰️</span>
+            <span class="card-tag tag-blue">Data</span>
+            <h3>Monitoring Infrastructure</h3>
+            <p>
+              OceanPulse aggregates data from
+              <strong>3,800+ Argo floats</strong>, 12 satellite altimetry
+              platforms, NOAA buoy networks, and GEOSS-affiliated institutions.
+              Data latency: &lt;1 hour.
+            </p>
+            <span class="card-value" style="color: #38bdf8">3,800+</span>
+            <span class="card-change" style="color: #4ade80"
+              ><span class="live-dot"></span> Sensors active globally</span
+            >
+            <span class="card-link">System overview</span>
+          </a>
+
+          <a href="references.html" class="blurb-card">
+            <span class="card-icon">📚</span>
+            <span class="card-tag tag-teal">Sources</span>
+            <h3>Data Sources & Ethics</h3>
+            <p>
+              All data sourced from NOAA, NASA PODAAC, IPCC AR6, ESA CCI, and
+              peer-reviewed research. Committed to open science, transparent
+              methodology, and equitable ocean data access.
+            </p>
+            <span class="card-link">View references</span>
+          </a>
+        </div>
+
+        <!-- Final CTA -->
+        <div
+          class="reveal"
+          style="
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2.5rem;
+            background: rgba(0, 20, 40, 0.5);
+            border: 1px solid rgba(56, 189, 248, 0.12);
+            border-radius: 20px;
+          "
+        >
+          <h3 style="font-size: 1.3rem; color: white; margin-bottom: 0.8rem">
+            Ready to explore the full data?
+          </h3>
+          <p style="max-width: 480px; margin: 0 auto 1.5rem; font-size: 0.9rem">
+            Access the interactive dashboard, deep-dive into the science, or
+            review our methodology and sources.
+          </p>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 1rem;
+              flex-wrap: wrap;
+            "
+          >
+            <a href="dashboard.html" class="hero-cta">Open Dashboard</a>
+            <a href="insights.html" class="hero-cta-ghost">Read Insights</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="ocean-footer">
+      <p>© 2026 OceanPulse — Ocean State Monitoring Dashboard</p>
+      <p>Data: NOAA · NASA · IPCC AR6 · ESA CCI · Argo Float Program</p>
+      <p><a href="references.html">References & Ethics</a></p>
+    </footer>
+
+    <script src="js/loader.js"></script>
+    <script src="js/scroll.js"></script>
+    <script src="js/parallax.js"></script>
+    <script src="js/cursor.js"></script>
+  </body>
+</html>

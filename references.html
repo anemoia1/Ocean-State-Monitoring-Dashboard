@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>References – OceanPulse</title>
+  <meta name="description" content="Data sources, scientific references, methodology, and ethical statement for the OceanPulse Ocean State Monitoring Dashboard." />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/effects.css" />
+</head>
+<body style="background:linear-gradient(180deg,#020f1a 0%,#010810 100%);">
+
+<div class="custom-cursor"></div>
+
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+<nav class="ocean-nav scrolled" role="navigation">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">🌊</div>
+    OceanPulse
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Explore</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="insights.html">Insights</a></li>
+    <li><a href="references.html" class="active">References</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrapper">
+  <div class="page-header">
+    <div style="max-width:900px;margin:0 auto;">
+      <div class="eyebrow" style="display:inline-block;font-size:0.72rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent-cyan);margin-bottom:0.8rem;padding:0.3rem 0.9rem;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.2);border-radius:999px;">Sources & Ethics</div>
+      <h1 style="font-size:clamp(1.5rem,3.5vw,2.2rem);color:white;margin-bottom:0.6rem;">References & Methodology</h1>
+      <p style="font-size:0.9rem;color:rgba(140,190,230,0.75);">
+        Data provenance, scientific references, image credits, ethical statement, and course attribution for the OceanPulse platform.
+      </p>
+    </div>
+  </div>
+
+  <div class="page-content" style="max-width:900px;">
+
+    <!-- Primary data sources -->
+    <h2 style="font-size:1.1rem;font-family:var(--font-body);font-weight:600;color:white;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(56,189,248,0.12);">
+      Primary Data Sources
+    </h2>
+
+    <div class="ref-block reveal">
+      <h4>NOAA National Centers for Environmental Information (NCEI)</h4>
+      <p>Extended Reconstructed Sea Surface Temperature v5 (ERSSTv5); World Ocean Atlas 2023 (salinity, temperature, dissolved oxygen); Global Ocean Heat and Salt Content; Marine Heatwave monitoring products.</p>
+      <a href="https://www.ncei.noaa.gov/" target="_blank" rel="noopener">ncei.noaa.gov</a>
+    </div>
+
+    <div class="ref-block reveal reveal-delay-1">
+      <h4>NASA Physical Oceanography DAAC (PO.DAAC)</h4>
+      <p>Multiscale Ultra-high Resolution Sea Surface Temperature (MUR-SST) product; GRACE-FO land ice mass balance; TOPEX/Poseidon, Jason-1/2/3, and Sentinel-6 satellite altimetry for sea level monitoring.</p>
+      <a href="https://podaac.jpl.nasa.gov/" target="_blank" rel="noopener">podaac.jpl.nasa.gov</a>
+    </div>
+
+    <div class="ref-block reveal">
+      <h4>Argo International Program</h4>
+      <p>Global array of 3,800+ profiling floats providing real-time temperature and salinity profiles from the surface to 2000 m depth in the global ocean. Ocean heat content anomaly estimates derived from Argo gridded products (Roemmich–Gilson Argo Climatology).</p>
+      <a href="https://argo.ucsd.edu/" target="_blank" rel="noopener">argo.ucsd.edu</a>
+    </div>
+
+    <div class="ref-block reveal reveal-delay-1">
+      <h4>IPCC Sixth Assessment Report (AR6) — 2021</h4>
+      <p>Working Group I: The Physical Science Basis. Chapters 2 (Changing State of the Climate System), 3 (Human Influence on the Climate System), and 9 (Ocean, Cryosphere and Sea Level Change). Sea level rise projections, SST trends, and ocean acidification scenarios referenced throughout.</p>
+      <a href="https://www.ipcc.ch/report/ar6/wg1/" target="_blank" rel="noopener">ipcc.ch/report/ar6/wg1</a>
+    </div>
+
+    <div class="ref-block reveal">
+      <h4>ESA Climate Change Initiative (CCI) — Ocean Colour</h4>
+      <p>Global chlorophyll-a concentration products from merged multi-sensor satellite ocean colour data (SeaWiFS, MODIS, MERIS, OLCI). Used for phytoplankton biomass and primary productivity assessments.</p>
+      <a href="https://climate.esa.int/en/projects/ocean-colour/" target="_blank" rel="noopener">climate.esa.int</a>
+    </div>
+
+    <div class="ref-block reveal reveal-delay-1">
+      <h4>Global Ocean Observing System (GOOS) / IOCCP</h4>
+      <p>Surface ocean CO₂ atlas (SOCAT v2023) and Surface Ocean pCO₂ and pH products used for ocean acidification monitoring. Dissolved oxygen data from the GO-SHIP hydrographic survey programme.</p>
+      <a href="https://www.goosocean.org/" target="_blank" rel="noopener">goosocean.org</a>
+    </div>
+
+    <div class="ref-block reveal">
+      <h4>Ocean Biodiversity Information System (OBIS)</h4>
+      <p>Species occurrence data and range shift analysis for marine biodiversity stress quantification. Coral bleaching event data from the NOAA Coral Reef Watch programme and the Global Coral Bleaching Database.</p>
+      <a href="https://obis.org/" target="_blank" rel="noopener">obis.org</a>
+    </div>
+
+    <!-- Peer-reviewed literature -->
+    <h2 style="font-size:1.1rem;font-family:var(--font-body);font-weight:600;color:white;margin:2rem 0 1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(56,189,248,0.12);">
+      Key Scientific Literature
+    </h2>
+
+    <div class="ref-block reveal">
+      <h4>Marine Heatwave Definition & Classification</h4>
+      <p>Hobday, A.J. et al. (2018). Categorizing and naming marine heatwaves. <em>Oceanography</em>, 31(2), 162–173. <span style="color:rgba(100,200,255,0.45)">DOI: 10.5670/oceanog.2018.205</span></p>
+    </div>
+
+    <div class="ref-block reveal reveal-delay-1">
+      <h4>Ocean Deoxygenation</h4>
+      <p>Oschlies, A. et al. (2018). Drivers and mechanisms of ocean deoxygenation. <em>Nature Geoscience</em>, 11, 467–473. <span style="color:rgba(100,200,255,0.45)">DOI: 10.1038/s41561-018-0152-2</span></p>
+    </div>
+
+    <div class="ref-block reveal">
+      <h4>Ocean Heat Content Record</h4>
+      <p>Cheng, L. et al. (2024). Another Record: Ocean Warming Continues through 2023 despite El Niño. <em>Advances in Atmospheric Sciences</em>. <span style="color:rgba(100,200,255,0.45)">DOI: 10.1007/s00376-024-3378-5</span></p>
+    </div>
+
+    <div class="ref-block reveal reveal-delay-1">
+      <h4>Ocean Acidification & Calcification</h4>
+      <p>Orr, J.C. et al. (2005). Anthropogenic ocean acidification over the twenty-first century and its impact on calcifying organisms. <em>Nature</em>, 437, 681–686. <span style="color:rgba(100,200,255,0.45)">DOI: 10.1038/nature04095</span></p>
+    </div>
+
+    <div class="ref-block reveal">
+      <h4>Phytoplankton Decline</h4>
+      <p>Boyce, D.G., Lewis, M.R., & Worm, B. (2010). Global phytoplankton decline over the past century. <em>Nature</em>, 466, 591–596. <span style="color:rgba(100,200,255,0.45)">DOI: 10.1038/nature09268</span></p>
+    </div>
+
+    <div class="ref-block reveal reveal-delay-1">
+      <h4>Plastic Pollution in Deep Ocean</h4>
+      <p>Peng, X. et al. (2020). Microplastics contaminate the deepest part of the world's ocean. <em>Geochemical Perspectives Letters</em>, 9, 1–5. <span style="color:rgba(100,200,255,0.45)">DOI: 10.7185/geochemlet.2013</span></p>
+    </div>
+
+    <!-- Ethical statement -->
+    <h2 style="font-size:1.1rem;font-family:var(--font-body);font-weight:600;color:white;margin:2rem 0 1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(56,189,248,0.12);">
+      Ethical Statement
+    </h2>
+
+    <div class="ref-block reveal" style="border-color:rgba(56,189,248,0.18);background:rgba(0,20,40,0.6);">
+      <p style="line-height:1.85;font-size:0.88rem;">
+        OceanPulse is committed to <strong style="color:white">open science and transparent communication</strong> of ocean monitoring data. All numerical values, trend analyses, and projections presented on this platform are grounded in peer-reviewed science and primary observational data from authoritative international programmes. Where data have been synthesised, simplified, or estimated for visualisation purposes, this is clearly indicated.
+      </p>
+      <br/>
+      <p style="line-height:1.85;font-size:0.88rem;">
+        The <strong style="color:white">Ocean Stress Index (OSI)</strong> is an original conceptual metric developed for illustrative and educational purposes. Its weighting coefficients and sub-index formulations have not undergone peer review and should not be used for operational decision-making without further validation.
+      </p>
+      <br/>
+      <p style="line-height:1.85;font-size:0.88rem;">
+        We acknowledge the efforts of the thousands of scientists, ship crews, and technicians globally who maintain the observational infrastructure that makes ocean monitoring possible. We support <strong style="color:white">equitable access to ocean data</strong> and endorse the FAIR data principles (Findable, Accessible, Interoperable, Reusable).
+      </p>
+    </div>
+
+    <!-- Course attribution -->
+    <h2 style="font-size:1.1rem;font-family:var(--font-body);font-weight:600;color:white;margin:2rem 0 1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(56,189,248,0.12);">
+      Project Attribution
+    </h2>
+
+    <div class="ref-block reveal" style="background:rgba(0,30,55,0.6);">
+      <h4>OceanPulse — Ocean State Monitoring Dashboard</h4>
+      <p>An immersive, scroll-driven web application for ocean environmental monitoring and public science communication.</p>
+      <br/>
+      <p><strong style="color:rgba(200,230,255,0.8)">Technologies used:</strong> HTML5, CSS3 (Glassmorphism, Parallax, CSS Animations), Vanilla JavaScript (Intersection Observer API), Chart.js v4, Google Fonts (Inter, Playfair Display).</p>
+      <br/>
+      <p><strong style="color:rgba(200,230,255,0.8)">Data sources:</strong> NOAA NCEI · NASA PO.DAAC · Argo International Programme · IPCC AR6 · ESA CCI · GOOS/IOCCP · OBIS · NOAA Coral Reef Watch.</p>
+      <br/>
+      <p style="color:rgba(100,180,220,0.5);font-size:0.8rem;">© 2026 OceanPulse. Educational use only. All scientific data remains the property of respective originating institutions.</p>
+    </div>
+
+  </div>
+
+  <footer class="ocean-footer">
+    <p>© 2026 OceanPulse — Ocean State Monitoring Dashboard</p>
+    <p>Data: NOAA · NASA · IPCC AR6 · Argo Float Program</p>
+    <p><a href="references.html">References & Ethics</a></p>
+  </footer>
+</div>
+
+<script src="js/scroll.js"></script>
+<script src="js/parallax.js"></script>
+<script src="js/cursor.js"></script>
+</body>
+</html>

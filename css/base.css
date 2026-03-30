@@ -1,0 +1,106 @@
+/* base.css — Reset, typography, variables */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --sky-top:       #a8d8ea;
+  --sky-bottom:    #60b4d4;
+  --surface-top:   #1c7ba0;
+  --surface-bottom:#0e5d80;
+  --shallow-top:   #0a4d70;
+  --shallow-bottom:#073d5a;
+  --mid-top:       #052d45;
+  --mid-bottom:    #031e30;
+  --deep-top:      #020f1a;
+  --deep-bottom:   #010a12;
+  --floor-top:     #010810;
+  --floor-bottom:  #000508;
+
+  --text-light:    rgba(255,255,255,0.95);
+  --text-mid:      rgba(200,230,255,0.85);
+  --text-dim:      rgba(140,190,230,0.7);
+
+  --card-glass:    rgba(0,30,60,0.45);
+  --card-border:   rgba(100,200,255,0.15);
+  --card-glow:     rgba(56,189,248,0.12);
+
+  --accent-cyan:   #38bdf8;
+  --accent-teal:   #2dd4bf;
+  --accent-green:  #4ade80;
+  --accent-yellow: #facc15;
+  --accent-orange: #fb923c;
+  --accent-red:    #f87171;
+
+  --font-body: 'Inter', sans-serif;
+  --font-display: 'Playfair Display', serif;
+  --radius: 16px;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-light);
+  overflow-x: hidden;
+  background: var(--deep-bottom);
+}
+
+a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+}
+
+a:hover {
+  color: #7dd3fc;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: 1.2;
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2.5rem); font-weight: 600; }
+h3 { font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 600; }
+
+p {
+  line-height: 1.7;
+  color: var(--text-mid);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #010a12; }
+::-webkit-scrollbar-thumb { background: rgba(56,189,248,0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(56,189,248,0.55); }
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Selection */
+::selection {
+  background: rgba(56,189,248,0.3);
+  color: white;
+}
+
+/* Utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+}

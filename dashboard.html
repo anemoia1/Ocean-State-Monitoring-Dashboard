@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard – OceanPulse</title>
+  <meta name="description" content="Interactive dashboard with live ocean monitoring data — SST, sea level, pH, heat content, and heatwave alerts." />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/effects.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body style="background:linear-gradient(180deg,#020f1a 0%,#010810 100%);">
+
+<div class="custom-cursor"></div>
+
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+<nav class="ocean-nav scrolled" role="navigation">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">🌊</div>
+    OceanPulse
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Explore</a></li>
+    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+    <li><a href="insights.html">Insights</a></li>
+    <li><a href="references.html">References</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.75rem;color:rgba(100,200,255,0.5)">
+    <span class="live-dot"></span> Live Feed
+  </div>
+</nav>
+
+<div class="page-wrapper">
+  <div class="page-header">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+        <div>
+          <h1 style="font-size:clamp(1.4rem,3vw,2rem);color:white;margin-bottom:0.4rem;">Ocean State Dashboard</h1>
+          <p style="font-size:0.85rem;color:rgba(100,180,220,0.65);">
+            Real-time monitoring · Last updated: <span id="last-updated"></span>
+          </p>
+        </div>
+        <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+          <span style="font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.9rem;background:rgba(248,113,113,0.12);color:#f87171;border:1px solid rgba(248,113,113,0.25);border-radius:999px;">3 Active Heatwaves</span>
+          <span style="font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.9rem;background:rgba(56,189,248,0.1);color:#38bdf8;border:1px solid rgba(56,189,248,0.2);border-radius:999px;">2024 Record Year</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-content">
+
+    <!-- STAT CARDS -->
+    <div class="stats-row">
+      <div class="stat-card reveal">
+        <div class="stat-label">Avg Sea Surface Temp</div>
+        <div class="stat-value" style="color:#38bdf8">18.7°C</div>
+        <div class="stat-change" style="color:#fb923c">▲ +2.3°C above 20th-c. avg</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-1">
+        <div class="stat-label">Sea Level Rise (1990)</div>
+        <div class="stat-value" style="color:#2dd4bf">+115 mm</div>
+        <div class="stat-change" style="color:#fb923c">▲ 3.7 mm/yr current rate</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-2">
+        <div class="stat-label">Surface Ocean pH</div>
+        <div class="stat-value" style="color:#a78bfa">8.04</div>
+        <div class="stat-change" style="color:#f87171">▼ −0.14 since pre-industrial</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-3">
+        <div class="stat-label">Active Heatwaves</div>
+        <div class="stat-value" style="color:#f87171">3</div>
+        <div class="stat-change" style="color:#f87171">⚠️ 1 Severe · 1 High · 1 Watch</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-4">
+        <div class="stat-label">Ocean Heat Content</div>
+        <div class="stat-value" style="color:#fb923c">385 ZJ</div>
+        <div class="stat-change" style="color:#f87171">▲ Record high · 2024</div>
+      </div>
+    </div>
+
+    <!-- CHARTS ROW 1 -->
+    <div id="chart-row-1" style="display:grid;gap:1.25rem;margin-bottom:1.5rem;">
+      <div class="chart-card reveal">
+        <h3>Sea Surface Temperature Trend</h3>
+        <p class="chart-subtitle">Global average SST (°C) and anomaly from 20th-century baseline · 1995–2024</p>
+        <div class="chart-canvas-wrap">
+          <canvas id="sst-chart" role="img" aria-label="Sea surface temperature trend chart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card reveal reveal-delay-1">
+        <h3>Global Sea Level Rise</h3>
+        <p class="chart-subtitle">Mean sea level anomaly in mm above 1990 baseline · Satellite altimetry</p>
+        <div class="chart-canvas-wrap">
+          <canvas id="sea-level-chart" role="img" aria-label="Sea level rise chart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHARTS ROW 2 -->
+    <div id="chart-row-2" style="display:grid;gap:1.25rem;margin-bottom:1.5rem;">
+      <div class="chart-card reveal">
+        <h3>Ocean Acidification — Surface pH</h3>
+        <p class="chart-subtitle">Surface ocean pH from pre-industrial era to 2024 · Estimated + observational</p>
+        <div class="chart-canvas-wrap">
+          <canvas id="ph-chart" role="img" aria-label="Ocean pH chart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card reveal reveal-delay-1">
+        <h3>Ocean Heat Content Anomaly</h3>
+        <p class="chart-subtitle">Upper 2000 m OHC departure from 2005–2015 mean · Zettajoules (ZJ)</p>
+        <div class="chart-canvas-wrap">
+          <canvas id="ohc-chart" role="img" aria-label="Ocean heat content chart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALERTS + PARAMS ROW -->
+    <div id="alerts-row" style="display:grid;gap:1.25rem;">
+
+      <!-- Heatwave alerts -->
+      <div class="chart-card reveal">
+        <h3>🔥 Marine Heatwave Alerts</h3>
+        <p class="chart-subtitle">Active events ranked by severity · Updated hourly</p>
+
+        <div class="alert-card">
+          <div class="alert-severity sev-severe"></div>
+          <div class="alert-content">
+            <h4>North Atlantic Basin</h4>
+            <p>SST anomaly +4.2°C · Duration 38 days · Coral bleaching risk critical</p>
+            <p style="margin-top:0.25rem;font-size:0.75rem;color:rgba(100,200,255,0.35);">Detected: 2026-02-19 · Category 4 · 850,000 km² affected</p>
+          </div>
+          <span class="alert-badge badge-severe">Severe</span>
+        </div>
+
+        <div class="alert-card">
+          <div class="alert-severity sev-moderate"></div>
+          <div class="alert-content">
+            <h4>Coral Sea, Western Pacific</h4>
+            <p>SST anomaly +2.8°C · Duration 19 days · Bleaching risk elevated</p>
+            <p style="margin-top:0.25rem;font-size:0.75rem;color:rgba(100,200,255,0.35);">Detected: 2026-03-08 · Category 2 · 320,000 km² affected</p>
+          </div>
+          <span class="alert-badge badge-moderate">High</span>
+        </div>
+
+        <div class="alert-card">
+          <div class="alert-severity sev-watch"></div>
+          <div class="alert-content">
+            <h4>Gulf of Mexico</h4>
+            <p>SST anomaly +1.4°C · Duration 7 days · Monitoring intensified</p>
+            <p style="margin-top:0.25rem;font-size:0.75rem;color:rgba(100,200,255,0.35);">Detected: 2026-03-20 · Category 1 · 95,000 km² affected</p>
+          </div>
+          <span class="alert-badge badge-watch">Watch</span>
+        </div>
+      </div>
+
+      <!-- Additional parameters -->
+      <div class="chart-card reveal reveal-delay-1">
+        <h3>📡 Additional Parameters</h3>
+        <p class="chart-subtitle">Current global averages · Real-time sensor network</p>
+
+        <div style="display:flex;flex-direction:column;gap:0.65rem;margin-top:0.75rem;">
+
+          <div style="display:flex;align-items:center;gap:0.75rem;padding:0.85rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;">
+            <span style="font-size:1.2rem;flex-shrink:0;">💨</span>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:0.82rem;font-weight:500;color:rgba(200,230,255,0.9)">Dissolved Oxygen</div>
+              <div style="font-size:0.72rem;color:rgba(100,180,220,0.5)">−2% global decline since 1960 · OMZ expansion ongoing</div>
+            </div>
+            <div style="font-weight:700;font-family:monospace;font-size:0.95rem;color:#2dd4bf;flex-shrink:0;">6.2 mg/L</div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:0.75rem;padding:0.85rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;">
+            <span style="font-size:1.2rem;flex-shrink:0;">🌿</span>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:0.82rem;font-weight:500;color:rgba(200,230,255,0.9)">Chlorophyll (Chl-a)</div>
+              <div style="font-size:0.72rem;color:rgba(100,180,220,0.5)">−40% in oligotrophic gyres since 1950</div>
+            </div>
+            <div style="font-weight:700;font-family:monospace;font-size:0.95rem;color:#4ade80;flex-shrink:0;">0.31 mg/m³</div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:0.75rem;padding:0.85rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;">
+            <span style="font-size:1.2rem;flex-shrink:0;">🧂</span>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:0.82rem;font-weight:500;color:rgba(200,230,255,0.9)">Surface Salinity</div>
+              <div style="font-size:0.72rem;color:rgba(100,180,220,0.5)">Regional extremes widening · Arctic freshening risk</div>
+            </div>
+            <div style="font-weight:700;font-family:monospace;font-size:0.95rem;color:#38bdf8;flex-shrink:0;">34.7 PSU</div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:0.75rem;padding:0.85rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;">
+            <span style="font-size:1.2rem;flex-shrink:0;">🧴</span>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:0.82rem;font-weight:500;color:rgba(200,230,255,0.9)">Marine Plastic Pollution Index</div>
+              <div style="font-size:0.72rem;color:rgba(100,180,220,0.5)">11M metric tons/yr · Microplastics in all ocean zones</div>
+            </div>
+            <div style="font-weight:700;font-family:monospace;font-size:0.95rem;color:#facc15;flex-shrink:0;">7.2 / 10</div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:0.75rem;padding:0.85rem;background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.15);border-radius:12px;">
+            <span style="font-size:1.2rem;flex-shrink:0;">📊</span>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:0.82rem;font-weight:500;color:rgba(200,230,255,0.9)">Ocean Stress Index (OSI)</div>
+              <div style="font-size:0.72rem;color:rgba(100,180,220,0.5)">Composite of SST, pH, O₂, SLR, biodiversity · 2024 record</div>
+            </div>
+            <div style="font-weight:700;font-family:monospace;font-size:0.95rem;color:#f87171;flex-shrink:0;">6.8 / 10</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer class="ocean-footer">
+    <p>© 2026 OceanPulse — Ocean State Monitoring Dashboard</p>
+    <p>Data: NOAA · NASA · IPCC AR6 · Argo Float Program</p>
+    <p><a href="references.html">References & Ethics</a></p>
+  </footer>
+</div>
+
+<script>
+  // Set last updated time
+  const el = document.getElementById('last-updated');
+  if (el) el.textContent = new Date().toLocaleString('en-US', { dateStyle:'medium', timeStyle:'short' });
+
+  // Responsive grid
+  function applyGridLayout() {
+    const w = window.innerWidth;
+    const cols = w < 768 ? '1fr' : '1fr 1fr';
+    ['chart-row-1','chart-row-2','alerts-row'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.gridTemplateColumns = cols;
+    });
+  }
+  window.addEventListener('resize', applyGridLayout);
+  applyGridLayout();
+</script>
+<script src="js/scroll.js"></script>
+<script src="js/parallax.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/cursor.js"></script>
+</body>
+</html>

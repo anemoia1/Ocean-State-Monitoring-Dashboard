@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Insights – OceanPulse</title>
+  <meta name="description" content="Scientific insights into ocean monitoring parameters — SST, marine heatwaves, sea level rise, acidification, and the Ocean Stress Index." />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/effects.css" />
+</head>
+<body style="background:linear-gradient(180deg,#020f1a 0%,#010810 100%);">
+
+<div class="custom-cursor"></div>
+
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+<nav class="ocean-nav scrolled" role="navigation">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">🌊</div>
+    OceanPulse
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Explore</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="insights.html" class="active">Insights</a></li>
+    <li><a href="references.html">References</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrapper">
+  <div class="page-header">
+    <div style="max-width:780px;margin:0 auto;">
+      <div class="eyebrow" style="display:inline-block;font-size:0.72rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent-cyan);margin-bottom:0.8rem;padding:0.3rem 0.9rem;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.2);border-radius:999px;">Scientific Insights</div>
+      <h1 style="font-size:clamp(1.5rem,3.5vw,2.2rem);color:white;margin-bottom:0.6rem;">Understanding Ocean Monitoring</h1>
+      <p style="font-size:0.9rem;color:rgba(140,190,230,0.75);max-width:560px;">
+        Detailed explanations of each monitoring parameter, the science of marine heatwaves, and the methodology behind the Ocean Stress Index.
+      </p>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="insights-section">
+
+      <div class="insight-block reveal">
+        <h3>🌡️ Sea Surface Temperature (SST)</h3>
+        <p>
+          Sea Surface Temperature is the fundamental variable of physical oceanography. Measured by <span class="insight-metric">3,800+ Argo floats</span>, satellite radiometers (MODIS, AVHRR), and ship-mounted sensors, SST tracks the ocean's energy exchange with the atmosphere. The global average SST has increased by <span class="insight-metric">+0.9°C</span> since 1880, with the most dramatic increases occurring post-1980 as anthropogenic greenhouse gas forcing intensified. The current global average of <span class="insight-metric">18.7°C</span> represents a <span class="insight-metric">+2.3°C</span> anomaly above the 20th-century mean — a signal unprecedented in the instrumental record. SST anomalies drive intensified tropical cyclones, disrupt fisheries recruitment, and serve as early indicators of marine heatwave formation.
+        </p>
+      </div>
+
+      <div class="insight-block reveal reveal-delay-1">
+        <h3>🔥 Marine Heatwaves — Definition & Severity</h3>
+        <p>
+          A marine heatwave (MHW) is defined as a period of at least 5 consecutive days when SST exceeds the <span class="insight-metric">90th percentile</span> of the local climatological baseline (1981–2010). The Hobday et al. (2018) category system classifies MHWs from Category I (Moderate) through Category IV (Extreme) based on the intensity of the anomaly relative to the seasonally varying 90th percentile threshold. The North Atlantic MHW currently active (<span class="insight-metric">+4.2°C anomaly</span>, 38 days) qualifies as Category IV — associated with mass coral bleaching, seagrass die-off, harmful algal blooms, and mortality events in fish, marine mammals, and seabirds. Global MHW days have doubled since 1982 and are projected to increase 10-fold under RCP 8.5 by 2100.
+        </p>
+      </div>
+
+      <div class="insight-block reveal">
+        <h3>♨️ Ocean Heat Content (OHC)</h3>
+        <p>
+          Ocean Heat Content quantifies the total thermal energy stored in the water column, typically expressed as a departure from the 2005–2015 mean in <span class="insight-metric">Zettajoules (ZJ)</span>. The upper 2000 m of the global ocean has absorbed over <span class="insight-metric">90% of excess heat</span> accumulated in the climate system since 1955. In 2024, the upper ocean reached a record anomaly of <span class="insight-metric">+385 ZJ</span> — equivalent to approximately 6 Hiroshima-scale nuclear detonations per second for the past 70 years. OHC increase drives sea level rise through thermal expansion, weakens deep-water formation, and fuels more intense and longer-lasting marine heatwaves. The Argo float programme provides real-time global OHC estimates with 10-day latency.
+        </p>
+      </div>
+
+      <div class="insight-block reveal reveal-delay-1">
+        <h3>📈 Sea Level Rise — Mechanisms & Projections</h3>
+        <p>
+          Global mean sea level has risen approximately <span class="insight-metric">+115 mm since 1990</span>, driven by two principal mechanisms: thermosteric expansion (ocean warming causing water to expand, contributing ~42%) and barystatic rise (mass addition from land-based ice melt, contributing ~58%). The current rate of <span class="insight-metric">3.7 mm/yr</span> represents a 28% acceleration compared to the 1993–2002 mean of 2.1 mm/yr, attributable to accelerating contributions from Greenland and Antarctic ice sheets. IPCC AR6 (2021) projects likely sea level rise of <span class="insight-metric">0.28–0.55 m under SSP2-4.5</span> and 0.63–1.01 m under SSP5-8.5 by 2100, with low-likelihood but high-impact scenarios exceeding 2 m. Regional variability can amplify global signals by 30–50% in vulnerable coastal regions.
+        </p>
+      </div>
+
+      <div class="insight-block reveal">
+        <h3>⚗️ Ocean Acidification</h3>
+        <p>
+          Ocean acidification results from oceanic uptake of atmospheric CO₂, producing carbonic acid (H₂CO₃) that dissociates to release hydrogen ions. Since the pre-industrial era, surface ocean pH has declined from <span class="insight-metric">8.18 to 8.04</span> — a 30% increase in hydrogen ion concentration on the logarithmic pH scale. This rate of acidification is estimated to be the fastest in at least 300 million years. The saturation state of aragonite (Ω<sub>arag</sub>) has declined below critical thresholds in the Southern Ocean and subarctic Pacific, threatening pteropods, oysters, corals, and other calcifying organisms that form the basis of food webs. At current emission trajectories, tropical coral systems face widespread dissolution stress by mid-century.
+        </p>
+      </div>
+
+      <div class="insight-block reveal reveal-delay-1">
+        <h3>🧂 Salinity & Thermohaline Circulation</h3>
+        <p>
+          Salinity patterns are intensifying as the hydrological cycle amplifies: evaporation-dominated subtropical gyres are becoming saltier (<span class="insight-metric">+0.1–0.2 PSU/decade</span>), while precipitation-dominated polar and tropical regions are freshening. This "salty gets saltier, fresh gets fresher" pattern amplifies regional climate extremes. Of critical concern is Arctic freshening: accelerating Greenland ice sheet melt is injecting vast quantities of fresh water into the North Atlantic, potentially disrupting the Atlantic Meridional Overturning Circulation (AMOC). AMOC has weakened by an estimated 15% since the mid-20th century — a trend that could trigger abrupt climate shifts if tipping points are crossed.
+        </p>
+      </div>
+
+      <div class="insight-block reveal">
+        <h3>💨 Dissolved Oxygen & Deoxygenation</h3>
+        <p>
+          The global ocean has lost approximately <span class="insight-metric">2% of its oxygen content</span> since 1960, and oxygen minimum zones (OMZs) have expanded by 4.5 million km². Deoxygenation has two primary causes: warming (oxygen solubility decreases with temperature, accounting for ~15%) and stratification (reduced ventilation of deep water by weakened overturning circulation, accounting for ~85%). Hypoxic events (&lt;<span class="insight-metric">2 mg O₂/L</span>) are lethal to most marine fauna and are increasing in frequency in coastal and open-ocean settings. Deoxygenation interacts synergistically with acidification and warming to compress the "oxygen debt" beyond which aerobic marine life cannot persist.
+        </p>
+      </div>
+
+      <div class="insight-block reveal reveal-delay-1">
+        <h3>🌿 Chlorophyll & Primary Productivity</h3>
+        <p>
+          Phytoplankton, measured via satellite remote sensing of surface chlorophyll-a concentration, are responsible for approximately <span class="insight-metric">50% of global net primary productivity</span> and constitute the foundation of marine food webs. Chlorophyll concentrations in oligotrophic subtropical gyres — which together cover ~40% of Earth's surface — have declined by an estimated 40% since 1950 as ocean stratification deepens and nutrient supply to the sunlit surface layer decreases. Simultaneously, polar regions are experiencing productivity increases as sea ice retreats. These diverging trends are reshuffling marine biodiversity and fisheries productivity in ways that are poorly constrained by current earth system models.
+        </p>
+      </div>
+
+      <div class="insight-block reveal">
+        <h3>🧴 Marine Plastic Pollution</h3>
+        <p>
+          Approximately <span class="insight-metric">11 million metric tons</span> of plastic enter the ocean annually. While surface garbage patches attract media attention, the majority of plastic (>99%) eventually fragments, sinks, and accumulates in deep-sea sediments — where concentrations exceed <span class="insight-metric">1.9 million fragments/m²</span> in the deepest trenches. Microplastics (&lt;5 mm) are now detected in the deep ocean, the water column, sea ice, and marine biota at every trophic level. The Marine Plastic Pollution Index (MPPI) used on this platform synthesizes ingestion prevalence across sentinel species, fragment concentration data from ocean surveys, and chemical leaching potential to derive a composite 0–10 score. The current value of <span class="insight-metric">7.2/10</span> reflects elevated and worsening conditions.
+        </p>
+      </div>
+
+      <div class="insight-block reveal reveal-delay-1" style="border-color:rgba(248,113,113,0.2);background:rgba(20,5,5,0.5);">
+        <h3>📊 Ocean Stress Index (OSI) — Original Methodology</h3>
+        <p>
+          The Ocean Stress Index is an original composite metric developed to provide a single, actionable summary of cumulative ocean system stress. It aggregates five normalised sub-indices:
+        </p>
+        <br/>
+        <p>
+          <strong style="color:white">OSI = w₁·T + w₂·A + w₃·O + w₄·S + w₅·B</strong>
+        </p>
+        <br/>
+        <p>
+          Where <strong style="color:white">T</strong> = SST anomaly index · <strong style="color:white">A</strong> = acidification index · <strong style="color:white">O</strong> = deoxygenation index · <strong style="color:white">S</strong> = sea level rise index · <strong style="color:white">B</strong> = biodiversity stress index, with weights w₁–w₅ calibrated against expert elicitation and biological sensitivity thresholds. Each sub-index is normalised to 0–10 against pre-industrial baselines and projections for RCP 8.5 at 2100 (=10). The current global OSI of <span class="insight-metric">6.8/10</span> represents the highest value since the index's 2000 baseline, driven primarily by the concurrent record SST anomaly and unprecedented coral bleaching events. An OSI above <span class="insight-metric">7.0</span> triggers protocol escalation to emergency monitoring status. Regional OSI values are available for 15 ocean sub-basins through the dashboard.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="ocean-footer">
+    <p>© 2026 OceanPulse — Ocean State Monitoring Dashboard</p>
+    <p>Data: NOAA · NASA · IPCC AR6 · Argo Float Program</p>
+    <p><a href="references.html">References & Ethics</a></p>
+  </footer>
+</div>
+
+<script src="js/scroll.js"></script>
+<script src="js/parallax.js"></script>
+<script src="js/cursor.js"></script>
+</body>
+</html>
