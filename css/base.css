@@ -1,4 +1,4 @@
-/* base.css — Reset, typography, variables */
+/* base.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap');
 
 *, *::before, *::after {
@@ -76,13 +76,11 @@ p {
   color: var(--text-mid);
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #010a12; }
 ::-webkit-scrollbar-thumb { background: rgba(56,189,248,0.3); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(56,189,248,0.55); }
 
-/* Accessibility */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;
@@ -90,13 +88,11 @@ p {
   }
 }
 
-/* Selection */
 ::selection {
   background: rgba(56,189,248,0.3);
   color: white;
 }
 
-/* Utility */
 .sr-only {
   position: absolute;
   width: 1px;
