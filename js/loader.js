@@ -1,4 +1,4 @@
-// loader.js — Page loader/intro animation
+// loader.js
 
 (function() {
   'use strict';
