@@ -1,9 +1,8 @@
-// charts.js — Chart.js initializations for dashboard.html
+// charts.js
 
 (function() {
   'use strict';
 
-  // Shared chart defaults
   const CHART_DEFAULTS = {
     color: 'rgba(200,230,255,0.8)',
     gridColor: 'rgba(56,189,248,0.07)',
@@ -51,7 +50,6 @@
     };
   }
 
-  // --- SST Trend Chart ---
   function initSSTChart() {
     const canvas = document.getElementById('sst-chart');
     if (!canvas) return;
@@ -123,7 +121,6 @@
     });
   }
 
-  // --- Sea Level Rise Chart ---
   function initSeaLevelChart() {
     const canvas = document.getElementById('sea-level-chart');
     if (!canvas) return;
@@ -166,7 +163,6 @@
     });
   }
 
-  // --- Ocean pH Trend ---
   function initPHChart() {
     const canvas = document.getElementById('ph-chart');
     if (!canvas) return;
@@ -215,7 +211,6 @@
     });
   }
 
-  // --- Ocean Heat Content Bar ---
   function initOHCChart() {
     const canvas = document.getElementById('ohc-chart');
     if (!canvas) return;
@@ -252,7 +247,6 @@
     });
   }
 
-  // --- Init all charts ---
   function init() {
     if (typeof Chart === 'undefined') {
       console.warn('Chart.js not loaded. Charts will not render.');
