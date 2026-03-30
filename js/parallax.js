@@ -1,9 +1,8 @@
-// parallax.js — Lightweight, clamped parallax + particle canvas
+// parallax.js
 
 (function() {
   'use strict';
 
-  // --- Parallax ---
   const PARALLAX_SPEED = {
     back: 0.15,
     mid: 0.3,
@@ -38,7 +37,6 @@
     }, { passive: true });
   }
 
-  // --- Particle Canvas ---
   function initParticles() {
     const canvas = document.getElementById('particle-canvas');
     if (!canvas) return;
@@ -63,7 +61,6 @@
       return maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0;
     }
 
-    // Create particles
     const BASE_COUNT = 55;
     const MAX_EXTRA = 45;
 
@@ -97,7 +94,6 @@
       const depth = getDepthFactor();
       const visibleCount = Math.floor(BASE_COUNT + depth * MAX_EXTRA);
 
-      // Depth-based color: cyan at surface → purple/biolum at depth
       const hueBase = 195 - depth * 60;
       const satBase = 70 + depth * 20;
       const biolumChance = depth * 0.3;
@@ -109,7 +105,6 @@
         p.x += p.vx + Math.sin(p.phase) * 0.15;
         p.y += p.vy;
 
-        // Wrap
         if (p.y < -10) { p.y = H + 5; p.x = Math.random() * W; }
         if (p.x < -10) p.x = W + 5;
         if (p.x > W + 10) p.x = -5;
@@ -132,7 +127,6 @@
     requestAnimationFrame(animate);
   }
 
-  // --- Scroll-based background depth tinting ---
   function initDepthColor() {
     const overlay = document.getElementById('depth-color-overlay');
     if (!overlay) return;
@@ -149,7 +143,6 @@
     update();
   }
 
-  // --- Waveform bars ---
   function initWaveform() {
     const wrap = document.querySelector('.hero-waveform');
     if (!wrap) return;
@@ -165,7 +158,6 @@
     }
   }
 
-  // --- Init ---
   function init() {
     initParallax();
     initParticles();
