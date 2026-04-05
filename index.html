@@ -23,6 +23,7 @@
   </head>
   <body>
     <div class="custom-cursor"></div>
+    <!-- LOADER -->
     <div id="ocean-loader" role="status" aria-live="polite">
       <div class="loader-logo">OceanPulse</div>
       <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
@@ -38,14 +39,18 @@
       </div>
     </div>
 
+    <!-- PARTICLE CANVAS -->
     <canvas id="particle-canvas" aria-hidden="true"></canvas>
 
+    <!-- DEPTH COLOR OVERLAY -->
     <div id="depth-color-overlay" aria-hidden="true"></div>
 
+    <!-- DEPTH PROGRESS BAR -->
     <div id="depth-bar" aria-hidden="true">
       <div id="depth-bar-fill" style="height: 0%"></div>
     </div>
 
+    <!-- PRESSURE GAUGE (section nav) -->
     <nav id="pressure-gauge" aria-label="Section navigation">
       <div class="pressure-node active" title="Sky"></div>
       <div class="pressure-node" title="Ocean Surface"></div>
@@ -55,6 +60,7 @@
       <div class="pressure-node" title="Seafloor"></div>
     </nav>
 
+    <!-- NAVIGATION -->
     <nav class="ocean-nav" role="navigation">
       <a href="index.html" class="nav-logo">
         <div class="nav-logo-icon">🌊</div>
@@ -69,6 +75,9 @@
       <div class="nav-depth-indicator" id="nav-depth-label">0 m · Sky</div>
     </nav>
 
+    <!-- ═══════════════════════════════════════
+     SECTION 1 — SKY (Hero)
+═══════════════════════════════════════ -->
     <section
       id="section-sky"
       class="ocean-section section-sky parallax-scene"
@@ -94,8 +103,8 @@
           <h1 id="sky-heading" class="reveal reveal-delay-1">
             The Depths <span>Await.</span><br />
           </h1>
-          <p class="hero-sub reveal reveal-delay-2">
-            Venture forth at your own risk.
+          <p class="hero-sub reveal reveal-delay-2" style="font-size:1.15rem; color:#ffffff; max-width:580px; margin:0 auto 2.5rem; font-weight:500; text-shadow: 0 2px 12px rgba(0,0,0,0.3);">
+            Under the surface lies the truth of our climate.
           </p>
           <div
             class="reveal reveal-delay-3"
@@ -108,13 +117,15 @@
             "
           >
             <a href="dashboard.html" class="hero-cta">View Live Dashboard</a>
-            <a href="insights.html" class="hero-cta-ghost">Read Insights</a>
+            <a href="insights.html" class="hero-cta">Read Insights</a>
           </div>
         </div>
       </div>
 
+      <!-- Waveform -->
       <div class="hero-waveform" aria-hidden="true"></div>
 
+      <!-- Scroll hint -->
       <div class="scroll-hint" aria-hidden="true">
         <span>Descend</span>
         <svg
@@ -127,6 +138,7 @@
         </svg>
       </div>
 
+      <!-- Wave divider -->
       <div class="wave-divider">
         <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
           <path
@@ -137,6 +149,9 @@
       </div>
     </section>
 
+    <!-- ═══════════════════════════════════════
+     SECTION 2 — OCEAN SURFACE (0–200 m)
+═══════════════════════════════════════ -->
     <section
       id="section-surface"
       class="ocean-section section-surface parallax-scene"
@@ -235,6 +250,9 @@
       </div>
     </section>
 
+    <!-- ═══════════════════════════════════════
+     SECTION 3 — SHALLOW (200–1000 m)
+═══════════════════════════════════════ -->
     <section
       id="section-shallow"
       class="ocean-section section-shallow parallax-scene"
@@ -310,6 +328,9 @@
       </div>
     </section>
 
+    <!-- ═══════════════════════════════════════
+     SECTION 4 — MID OCEAN (1000–4000 m)
+═══════════════════════════════════════ -->
     <section
       id="section-mid"
       class="ocean-section section-mid parallax-scene"
@@ -392,6 +413,9 @@
       </div>
     </section>
 
+    <!-- ═══════════════════════════════════════
+     SECTION 5 — DEEP OCEAN (4000–6000 m)
+═══════════════════════════════════════ -->
     <section
       id="section-deep"
       class="ocean-section section-deep parallax-scene"
@@ -504,6 +528,9 @@
       </div>
     </section>
 
+    <!-- ═══════════════════════════════════════
+     SECTION 6 — SEAFLOOR
+═══════════════════════════════════════ -->
     <section
       id="section-floor"
       class="ocean-section section-floor parallax-scene"
@@ -616,6 +643,7 @@
           </a>
         </div>
 
+        <!-- Final CTA -->
         <div
           class="reveal"
           style="
@@ -650,6 +678,7 @@
       </div>
     </section>
 
+    <!-- FOOTER -->
     <footer class="ocean-footer">
       <p>© 2026 OceanPulse — Ocean State Monitoring Dashboard</p>
       <p>Data: NOAA · NASA · IPCC AR6 · ESA CCI · Argo Float Program</p>

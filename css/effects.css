@@ -1,5 +1,6 @@
-/* effects.css */
+/* effects.css — Particles, animations, hover glows, loader */
 
+/* LOADER */
 #ocean-loader {
   position: fixed;
   inset: 0;
@@ -86,6 +87,7 @@
   50% { transform: translateY(-8px); opacity: 1; }
 }
 
+/* PARTICLE CANVAS */
 #particle-canvas {
   position: fixed;
   inset: 0;
@@ -94,6 +96,7 @@
   opacity: 0.55;
 }
 
+/* WAVE DIVIDERS */
 .wave-divider {
   position: absolute;
   bottom: -1px;
@@ -110,6 +113,7 @@
   height: 60px;
 }
 
+/* DEPTH PROGRESS BAR */
 #depth-bar {
   position: fixed;
   left: 0;
@@ -126,6 +130,7 @@
   transition: height 0.1s linear;
 }
 
+/* SCROLL REVEAL */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -142,6 +147,7 @@
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
 
+/* SECTION transition fade */
 .blurb-card {
   transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
@@ -150,11 +156,13 @@
 .blurb-card:nth-child(3) { transition-delay: 0.16s; }
 .blurb-card:nth-child(4) { transition-delay: 0.24s; }
 
+/* GLOW pulse on cards */
 @keyframes glowPulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(56,189,248,0); }
   50% { box-shadow: 0 0 20px 4px rgba(56,189,248,0.12); }
 }
 
+/* OCEAN BACKGROUND EFFECTS */
 .ocean-shimmer {
   position: absolute;
   inset: 0;
@@ -180,6 +188,7 @@
   to   { opacity: 1; transform: scale(1.03) translateY(-6px); }
 }
 
+/* SKY CLOUDS */
 .sky-cloud {
   position: absolute;
   border-radius: 999px;
@@ -197,6 +206,7 @@
   to   { transform: translateX(110vw); }
 }
 
+/* SUNRAYS */
 .sunray {
   position: absolute;
   top: 0;
@@ -213,6 +223,7 @@
   to   { opacity: 0.7; transform: rotate(calc(var(--r, 0deg) + 2deg)); }
 }
 
+/* BIOLUMINESCENCE at depth */
 .biolum {
   position: absolute;
   border-radius: 50%;
@@ -225,11 +236,13 @@
   50% { opacity: 0.5; transform: scale(1.1); }
 }
 
+/* Scroll transition blurring for deeper sections */
 .section-deep .ocean-shimmer,
 .section-floor .ocean-shimmer {
   background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(0,100,150,0.06) 0%, transparent 70%);
 }
 
+/* Pulse dot */
 .live-dot {
   display: inline-block;
   width: 8px; height: 8px;
@@ -246,6 +259,7 @@
   100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
 }
 
+/* HERO WAVEFORM */
 .hero-waveform {
   position: absolute;
   bottom: 4rem;

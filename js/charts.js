@@ -1,8 +1,9 @@
-// charts.js
+// charts.js — Chart.js initializations for dashboard.html
 
 (function() {
   'use strict';
 
+  // Shared chart defaults
   const CHART_DEFAULTS = {
     color: 'rgba(200,230,255,0.8)',
     gridColor: 'rgba(56,189,248,0.07)',
@@ -50,22 +51,19 @@
     };
   }
 
-  function initSSTChart() {
+  // --- SST Trend Chart ---
+  function initSSTChart(apiLabels, apiData, apiAnomaly) {
     const canvas = document.getElementById('sst-chart');
-    if (!canvas) return;
-
-    const labels = ['1995','1998','2001','2004','2007','2010','2013','2016','2019','2022','2024'];
-    const data   = [16.4, 16.8, 16.9, 17.1, 17.3, 17.4, 17.5, 17.9, 18.1, 18.4, 18.7];
-    const anomaly= [0.0,  0.4,  0.5,  0.7,  0.9,  1.0,  1.1,  1.5,  1.7,  2.0,  2.3];
+    if (!canvas || !apiLabels || apiLabels.length === 0) return;
 
     new Chart(canvas, {
       type: 'line',
       data: {
-        labels,
+        labels: apiLabels,
         datasets: [
           {
             label: 'Avg SST (°C)',
-            data,
+            data: apiData,
             borderColor: '#38bdf8',
             backgroundColor: 'rgba(56,189,248,0.07)',
             borderWidth: 2.5,
@@ -78,7 +76,7 @@
           },
           {
             label: 'Anomaly (°C)',
-            data: anomaly,
+            data: apiAnomaly,
             borderColor: '#fb923c',
             backgroundColor: 'transparent',
             borderWidth: 1.8,
@@ -121,20 +119,18 @@
     });
   }
 
-  function initSeaLevelChart() {
+  // --- Sea Level Rise Chart ---
+  function initSeaLevelChart(apiLabels, apiData) {
     const canvas = document.getElementById('sea-level-chart');
-    if (!canvas) return;
-
-    const labels = ['1990','1993','1996','1999','2002','2005','2008','2011','2014','2017','2020','2023','2024'];
-    const data   = [0, 8, 17, 22, 30, 40, 50, 62, 72, 85, 98, 108, 115];
+    if (!canvas || !apiLabels || apiLabels.length === 0) return;
 
     new Chart(canvas, {
       type: 'line',
       data: {
-        labels,
+        labels: apiLabels,
         datasets: [{
           label: 'Sea Level Rise (mm above 1990)',
-          data,
+          data: apiData,
           borderColor: '#2dd4bf',
           backgroundColor: 'rgba(45,212,191,0.07)',
           borderWidth: 2.5,
@@ -163,20 +159,18 @@
     });
   }
 
-  function initPHChart() {
+  // --- Ocean pH Trend ---
+  function initPHChart(apiLabels, apiData) {
     const canvas = document.getElementById('ph-chart');
-    if (!canvas) return;
-
-    const labels = ['1750','1900','1950','1980','2000','2010','2015','2020','2024'];
-    const data   = [8.18, 8.16, 8.14, 8.11, 8.08, 8.07, 8.065, 8.05, 8.04];
+    if (!canvas || !apiLabels || apiLabels.length === 0) return;
 
     new Chart(canvas, {
       type: 'line',
       data: {
-        labels,
+        labels: apiLabels,
         datasets: [{
           label: 'Surface Ocean pH',
-          data,
+          data: apiData,
           borderColor: '#a78bfa',
           backgroundColor: 'rgba(167,139,250,0.07)',
           borderWidth: 2.5,
@@ -211,22 +205,21 @@
     });
   }
 
-  function initOHCChart() {
+  // --- Ocean Heat Content Bar ---
+  function initOHCChart(apiLabels, apiData) {
     const canvas = document.getElementById('ohc-chart');
-    if (!canvas) return;
-
-    const labels = ['2005','2008','2011','2014','2017','2020','2023','2024'];
-    const data   = [0, 40, 95, 150, 200, 265, 340, 385];
+    if (!canvas || !apiLabels || apiLabels.length === 0) return;
 
     new Chart(canvas, {
       type: 'bar',
       data: {
-        labels,
+        labels: apiLabels,
         datasets: [{
           label: 'OHC Anomaly (ZJ)',
-          data,
-          backgroundColor: data.map(v => `rgba(56,189,248,${0.25 + (v / 385) * 0.55})`),
-          borderColor: data.map(v => `rgba(56,189,248,${0.4 + (v / 385) * 0.4})`),
+          data: apiData,
+          // dynamically shade the bars based on their value
+          backgroundColor: apiData.map(v => `rgba(56,189,248,${0.25 + (v / 385) * 0.55})`),
+          borderColor: apiData.map(v => `rgba(56,189,248,${0.4 + (v / 385) * 0.4})`),
           borderWidth: 1,
           borderRadius: 4,
         }]
@@ -247,16 +240,47 @@
     });
   }
 
+  // --- Data Fetching Engine ---
+  async function fetchDashboardData() {
+    try {
+      console.log("Fetching live data from API Aggregator...");
+      
+      const response = await fetch('http://localhost:5000/api/ocean-data');
+      if (!response.ok) throw new Error('Network response was not ok');
+      
+      const ocean = await response.json();
+      console.log("Aggregated Data Received:", ocean);
+
+      // Initialize all four charts by passing in the fetched data
+      if (ocean.sst) {
+        initSSTChart(ocean.sst.labels, ocean.sst.data, ocean.sst.anomaly);
+      }
+      if (ocean.seaLevel) {
+        initSeaLevelChart(ocean.seaLevel.labels, ocean.seaLevel.data);
+      }
+      if (ocean.ph) {
+        initPHChart(ocean.ph.labels, ocean.ph.data);
+      }
+      if (ocean.ohc) {
+        initOHCChart(ocean.ohc.labels, ocean.ohc.data);
+      }
+
+    } catch (error) {
+      console.error("Critical: Failed to fetch dashboard data.", error);
+      // If the backend fails, the charts gracefully remain blank instead of throwing errors.
+    }
+  }
+
+  // --- Init Bootstrapper ---
   function init() {
     if (typeof Chart === 'undefined') {
       console.warn('Chart.js not loaded. Charts will not render.');
       return;
     }
     applyChartGlobals();
-    initSSTChart();
-    initSeaLevelChart();
-    initPHChart();
-    initOHCChart();
+    
+    // Call the master fetch function
+    fetchDashboardData();
   }
 
   if (document.readyState === 'loading') {

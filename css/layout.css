@@ -1,5 +1,6 @@
-/* layout.css */
+/* layout.css — Sections, grid, cards, nav */
 
+/* NAV */
 .ocean-nav {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -76,6 +77,7 @@
   .nav-depth-indicator { display: none; }
 }
 
+/* SECTIONS */
 .ocean-section {
   position: relative;
   min-height: 100vh;
@@ -110,6 +112,7 @@
   background: linear-gradient(180deg, var(--floor-top) 0%, var(--floor-bottom) 100%);
 }
 
+/* Section depth label */
 .depth-label {
   position: absolute;
   top: 5.5rem;
@@ -121,6 +124,7 @@
   text-transform: uppercase;
 }
 
+/* Section inner */
 .section-inner {
   position: relative;
   z-index: 2;
@@ -129,6 +133,7 @@
   margin: 0 auto;
 }
 
+/* Section hero text */
 .section-hero {
   text-align: center;
   margin-bottom: 3.5rem;
@@ -155,6 +160,7 @@
   color: var(--text-mid);
 }
 
+/* CARD GRID */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -165,6 +171,7 @@
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
 }
 
+/* BLURB CARD */
 .blurb-card {
   background: var(--card-glass);
   border: 1px solid var(--card-border);
@@ -256,6 +263,7 @@
   transform: translateX(4px);
 }
 
+/* Tag colors */
 .tag-blue   { background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.25); }
 .tag-teal   { background: rgba(45,212,191,0.15); color: #2dd4bf; border: 1px solid rgba(45,212,191,0.25); }
 .tag-green  { background: rgba(74,222,128,0.15); color: #4ade80; border: 1px solid rgba(74,222,128,0.25); }
@@ -264,6 +272,7 @@
 .tag-red    { background: rgba(248,113,113,0.15);  color: #f87171; border: 1px solid rgba(248,113,113,0.25); }
 .tag-purple { background: rgba(167,139,250,0.15);  color: #a78bfa; border: 1px solid rgba(167,139,250,0.25); }
 
+/* HERO SECTION */
 .hero-content {
   text-align: center;
   position: relative;
@@ -287,7 +296,7 @@
 }
 
 .hero-content h1 span {
-  color: var(--accent-cyan);
+  color: #1e3a8a;
 }
 
 .hero-content .hero-sub {
@@ -371,6 +380,7 @@
   50% { transform: translateX(-50%) translateY(8px); }
 }
 
+/* DASHBOARD PAGE LAYOUT */
 .page-wrapper {
   min-height: 100vh;
   background: linear-gradient(180deg, #020f1a 0%, #010810 100%);
@@ -389,6 +399,7 @@
   padding: 2.5rem 2rem;
 }
 
+/* Stat cards row */
 .stats-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -434,6 +445,7 @@
   gap: 0.3rem;
 }
 
+/* Chart card */
 .chart-card {
   background: rgba(0,20,40,0.65);
   border: 1px solid rgba(56,189,248,0.12);
@@ -462,6 +474,7 @@
   position: relative;
 }
 
+/* Alert cards */
 .alert-card {
   background: rgba(0,20,40,0.65);
   border: 1px solid rgba(56,189,248,0.1);
@@ -518,6 +531,7 @@
 .badge-moderate { background: rgba(251,146,60,0.15);  color: #fb923c; border: 1px solid rgba(251,146,60,0.3); }
 .badge-severe   { background: rgba(248,113,113,0.15);  color: #f87171; border: 1px solid rgba(248,113,113,0.3); }
 
+/* INSIGHTS PAGE */
 .insights-section {
   max-width: 780px;
   margin: 0 auto;
@@ -570,7 +584,7 @@
   border-radius: 4px;
 }
 
-
+/* REFERENCES PAGE */
 .ref-block {
   background: rgba(0,20,40,0.5);
   border: 1px solid rgba(56,189,248,0.08);
@@ -611,6 +625,7 @@
   color: var(--text-dim);
 }
 
+/* Mobile */
 @media (max-width: 640px) {
   .card-grid, .card-grid-2 { grid-template-columns: 1fr; }
   .stats-row { grid-template-columns: 1fr 1fr; }
