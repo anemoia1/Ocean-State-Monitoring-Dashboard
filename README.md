@@ -14,7 +14,7 @@ OceanPulse is a data-driven dashboard that visualizes the current state of our o
 Because this project utilizes a Python backend to bypass CORS restrictions and parse live API data, it must be run on a local server.
 
 1. **Clone the repository:**
-   `git clone https://github.com/anemoia1/oceanpulse.git`
+   `git clone https://github.com/anemoia1/Ocean-State-Monitoring-Dashboard.git`
    `cd oceanpulse`
 
 2. **Set up the Python Virtual Environment:**
