@@ -243,7 +243,7 @@
     try {
       console.log("Fetching live data from API Aggregator...");
       
-      const response = await fetch('http://localhost:5000/api/ocean-data');
+      const response = await fetch('https://ocean-state-monitoring-dashboard.vercel.app/api/ocean-data');
       if (!response.ok) throw new Error('Network response was not ok');
       
       const ocean = await response.json();
