@@ -32,7 +32,6 @@ def fetch_noaa_sea_level():
                 if water_level is not None:
                     mm_value = round(float(water_level) * 1000)
                     values.append(mm_value)
-                    
         return labels, values
     except Exception as e:
         print(f"NOAA API Error: {e}")
@@ -74,7 +73,7 @@ def fetch_hosted_climate_data():
 
 @app.route('/api/ocean-data', methods=['GET'])
 def get_ocean_data():
-    """The master endpoint that aggregates all data sources"""
+    """Aggregates all data sources"""
 
     sl_labels, sl_values = fetch_noaa_sea_level()
     sst_labels, sst_values, sst_anomalies = fetch_openmeteo_sst()

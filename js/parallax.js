@@ -1,4 +1,4 @@
-// parallax.js — Lightweight, clamped parallax + particle canvas
+// parallax.js — Clamped parallax + particle canvas
 
 (function() {
   'use strict';
@@ -23,7 +23,6 @@
                     : layer.classList.contains('layer-mid')   ? PARALLAX_SPEED.mid
                     : PARALLAX_SPEED.front;
         const offset = sy * speed;
-        // Clamp to prevent infinite drift
         const clamped = Math.max(-120, Math.min(120, offset));
         layer.style.transform = `translateY(${clamped}px)`;
       });
@@ -57,13 +56,11 @@
       canvas.height = H;
     });
 
-    // Particle count based on scroll depth
     function getDepthFactor() {
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       return maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0;
     }
 
-    // Create particles
     const BASE_COUNT = 55;
     const MAX_EXTRA = 45;
 
@@ -97,7 +94,6 @@
       const depth = getDepthFactor();
       const visibleCount = Math.floor(BASE_COUNT + depth * MAX_EXTRA);
 
-      // Depth-based color: cyan at surface → purple/biolum at depth
       const hueBase = 195 - depth * 60;
       const satBase = 70 + depth * 20;
       const biolumChance = depth * 0.3;
@@ -109,14 +105,13 @@
         p.x += p.vx + Math.sin(p.phase) * 0.15;
         p.y += p.vy;
 
-        // Wrap
         if (p.y < -10) { p.y = H + 5; p.x = Math.random() * W; }
         if (p.x < -10) p.x = W + 5;
         if (p.x > W + 10) p.x = -5;
 
         const hue = i < visibleCount * (1 - biolumChance)
           ? hueBase + (i % 20)
-          : 140 + (i % 40);  // biolum green
+          : 140 + (i % 40);
 
         const alpha = p.alpha * (0.6 + 0.4 * Math.sin(p.phase));
 
@@ -132,7 +127,6 @@
     requestAnimationFrame(animate);
   }
 
-  // --- Scroll-based background depth tinting ---
   function initDepthColor() {
     const overlay = document.getElementById('depth-color-overlay');
     if (!overlay) return;
@@ -140,7 +134,6 @@
     function update() {
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       const pct = maxScroll > 0 ? window.scrollY / maxScroll : 0;
-      // Transition from transparent → deep blue overlay as depth increases
       const alpha = pct * 0.22;
       overlay.style.background = `rgba(0, 5, 15, ${alpha})`;
     }
@@ -149,7 +142,6 @@
     update();
   }
 
-  // --- Waveform bars ---
   function initWaveform() {
     const wrap = document.querySelector('.hero-waveform');
     if (!wrap) return;
@@ -165,7 +157,6 @@
     }
   }
 
-  // --- Init ---
   function init() {
     initParallax();
     initParticles();

@@ -1,6 +1,5 @@
 /* parallax.css — Parallax layers and scroll-based depth effects */
 
-/* Layer system */
 .parallax-scene {
   position: relative;
   overflow: hidden;
@@ -17,7 +16,6 @@
 .layer-mid   { z-index: 1; }
 .layer-front { z-index: 2; }
 
-/* Floating particles via CSS */
 .floating-particle {
   position: absolute;
   border-radius: 50%;
@@ -33,7 +31,6 @@
   100% { transform: translateY(-120px) translateX(var(--drift, 20px)); opacity: 0; }
 }
 
-/* Depth-scroll color shift overlay */
 #depth-color-overlay {
   position: fixed;
   inset: 0;
@@ -43,7 +40,6 @@
   transition: background 0.4s linear;
 }
 
-/* Scroll-based blur for depth illusion */
 .depth-blur-section {
   position: relative;
 }
@@ -52,7 +48,6 @@
   will-change: filter;
 }
 
-/* Section-specific depth atmospheres */
 .section-sky .parallax-bg {
   background: radial-gradient(ellipse 100% 50% at 50% -10%, rgba(135,206,235,0.4) 0%, transparent 60%);
 }
@@ -84,7 +79,6 @@
   z-index: 0;
 }
 
-/* Underwater light rays */
 .light-rays {
   position: absolute;
   top: 0; left: 0; right: 0;
@@ -109,7 +103,6 @@
   to   { transform: rotate(calc(var(--base, -10deg) + 6deg)) scaleX(1.2); opacity: 1; }
 }
 
-/* Seafloor sediment drift */
 .sediment {
   position: absolute;
   bottom: 0;
@@ -121,7 +114,6 @@
   pointer-events: none;
 }
 
-/* Pressure gauge sidebar */
 #pressure-gauge {
   position: fixed;
   right: 1.5rem;

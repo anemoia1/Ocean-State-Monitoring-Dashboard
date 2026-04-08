@@ -3,7 +3,6 @@
 (function() {
   'use strict';
 
-  // Shared chart defaults
   const CHART_DEFAULTS = {
     color: 'rgba(200,230,255,0.8)',
     gridColor: 'rgba(56,189,248,0.07)',
@@ -217,7 +216,6 @@
         datasets: [{
           label: 'OHC Anomaly (ZJ)',
           data: apiData,
-          // dynamically shade the bars based on their value
           backgroundColor: apiData.map(v => `rgba(56,189,248,${0.25 + (v / 385) * 0.55})`),
           borderColor: apiData.map(v => `rgba(56,189,248,${0.4 + (v / 385) * 0.4})`),
           borderWidth: 1,
@@ -240,7 +238,7 @@
     });
   }
 
-  // --- Data Fetching Engine ---
+  // --- Data Fetching ---
   async function fetchDashboardData() {
     try {
       console.log("Fetching live data from API Aggregator...");
@@ -251,7 +249,6 @@
       const ocean = await response.json();
       console.log("Aggregated Data Received:", ocean);
 
-      // Initialize all four charts by passing in the fetched data
       if (ocean.sst) {
         initSSTChart(ocean.sst.labels, ocean.sst.data, ocean.sst.anomaly);
       }
@@ -267,11 +264,9 @@
 
     } catch (error) {
       console.error("Critical: Failed to fetch dashboard data.", error);
-      // If the backend fails, the charts gracefully remain blank instead of throwing errors.
     }
   }
 
-  // --- Init Bootstrapper ---
   function init() {
     if (typeof Chart === 'undefined') {
       console.warn('Chart.js not loaded. Charts will not render.');
@@ -279,7 +274,6 @@
     }
     applyChartGlobals();
     
-    // Call the master fetch function
     fetchDashboardData();
   }
 
