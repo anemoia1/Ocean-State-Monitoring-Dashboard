@@ -1,6 +1,8 @@
 # OceanPulse
 Developed as part of Web Programming coursework (Semester 4).
 
+Website link: [https://anemoia1.github.io/Ocean-State-Monitoring-Dashboard/](https://anemoia1.github.io/Ocean-State-Monitoring-Dashboard/index.html)
+
 OceanPulse is a data-driven dashboard that visualizes the current state of our oceans. It uses a Python (Flask) backend proxy to aggregate live API data from NOAA and Open-Meteo, rendering it dynamically via an asynchronous JavaScript frontend.
 
 ## Features
