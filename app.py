@@ -5,6 +5,10 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/')
+def home():
+    return "OceanPulse API is Running!"
+
 def fetch_noaa_sea_level():
     """Fetches Sea Level data from NOAA CO-OPS API (The Battery, NY)"""
     url = (
